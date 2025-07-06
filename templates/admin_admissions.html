@@ -1,0 +1,200 @@
+<!-- templates/admin_admissions.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoffreFort – Gérer les Admissions</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --violet: #4b2bae;
+      --orange: #f46a35;
+      --gris: #f4f4f4;
+      --blanc: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: var(--gris);
+      color: #333;
+      padding-bottom: 90px; /* pour espace mobile */
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--violet), var(--orange));
+      padding: 25px;
+      text-align: center;
+      color: white;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+    header h1 {
+      font-size: 1.7rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      background: var(--blanc);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .logout {
+      text-align: right;
+      margin-bottom: 15px;
+    }
+    .logout a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .logout a i {
+      margin-right: 6px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--violet);
+      margin-bottom: 20px;
+    }
+
+    /* --------- Formulaire --------- */
+    form.admission-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    form.admission-form input, form.admission-form textarea {
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .btn-submit {
+      background: var(--orange);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .btn-submit:hover { background: #d94c1f; }
+
+    /* --------- Table --------- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead {
+      background: var(--violet);
+      color: white;
+    }
+    th, td {
+      padding: 12px 8px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    tbody tr:nth-child(even) { background: #fafafa; }
+
+    .btn-action {
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn-edit { background: #17a2b8; }
+    .btn-delete { background: #dc3545; }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr { margin-bottom: 15px; }
+      td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-weight: bold;
+        color: #555;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gestion des Admissions – CoffreFort</h1>
+  </header>
+
+  <div class="container">
+    <div class="logout">
+      <a href="/deconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </div>
+
+    <!-- ========= Formulaire ajout / modification ========= -->
+    <h2>Ajouter / Modifier une admission</h2>
+    <!-- Si vous passez un objet "edit" depuis Flask, pré‑remplissez les champs -->
+    <form class="admission-form" method="POST" action="/admin/admissions/save">
+      <input type="hidden" name="id" value="{{ edit.id if edit else '' }}" />
+      <input type="text" name="nom_universite" placeholder="Nom de l'université" required value="{{ edit.nom_universite if edit else '' }}" />
+      <input type="text" name="pays" placeholder="Pays" required value="{{ edit.pays if edit else '' }}" />
+      <input type="text" name="ville" placeholder="Ville" required value="{{ edit.ville if edit else '' }}" />
+      <input type="text" name="programme_disponible" placeholder="Programmes disponibles" required value="{{ edit.programme_disponible if edit else '' }}" />
+      <input type="url" name="site_web" placeholder="Site web" value="{{ edit.site_web if edit else '' }}" />
+      <button class="btn-submit" type="submit">{{ 'Mettre à jour' if edit else 'Ajouter' }}</button>
+    </form>
+
+    <!-- ========= Tableau des admissions ========= -->
+    <h2>Liste des admissions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Université</th>
+          <th>Pays</th>
+          <th>Ville</th>
+          <th>Programmes</th>
+          <th>Site web</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in admissions %}
+        <tr>
+          <td data-label="Université">{{ a.nom_universite }}</td>
+          <td data-label="Pays">{{ a.pays }}</td>
+          <td data-label="Ville">{{ a.ville }}</td>
+          <td data-label="Programmes">{{ a.programme_disponible }}</td>
+          <td data-label="Site web"><a href="{{ a.site_web }}" target="_blank">Visiter</a></td>
+          <td data-label="Actions">
+            <a href="/admin/admissions/{{ a.id }}/edit" class="btn-action btn-edit"><i class="fas fa-edit"></i></a>
+            <form action="/admin/admissions/{{ a.id }}/delete" method="post" style="display:inline">
+              <button class="btn-action btn-delete" onclick="return confirm('Supprimer cette admission ?')"><i class="fas fa-trash-alt"></i></button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

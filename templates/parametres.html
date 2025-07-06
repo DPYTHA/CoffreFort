@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paramètres</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4B2BAE;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #4B2BAE;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3a2391;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Paramètres de votre recherche</h2>
+  <form method="POST" action="/parametres">
+    <label for="pays_pref">Pays préféré</label>
+    <input type="text" name="pays_pref" placeholder="Ex: Canada, France..." value="{{ params.pays_pref or '' }}">
+
+    <label for="niveau">Niveau d’études</label>
+    <select name="niveau">
+      <option value="Licence">Licence</option>
+      <option value="Master">Master</option>
+      <option value="Doctorat">Doctorat</option>
+    </select>
+
+    <label for="domaine">Domaine d’études</label>
+    <input type="text" name="domaine" placeholder="Ex: Informatique, Biologie..." value="{{ params.domaine or '' }}">
+
+    <label for="langue">Langue d’enseignement</label>
+    <select name="langue">
+      <option value="Français">Français</option>
+      <option value="Anglais">Anglais</option>
+    </select>
+
+    <label for="notifications">Recevoir les notifications par email</label>
+    <select name="notifications">
+      <option value="oui">Oui</option>
+      <option value="non">Non</option>
+    </select>
+
+    <button type="submit">Enregistrer les paramètres</button>
+  </form>
+
+
+  <!-- Messagerie flottante -->
+<div class="messagerie-flottante">
+  <a href="https://wa.me/2250707070707" target="_blank" class="bouton-whatsapp" title="Écrivez-nous sur WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="tel:+2252722121212" class="bouton-phone" title="Appelez-nous">
+    <i class="fas fa-phone-alt"></i>
+  </a>
+</div>
+
+<!-- Icônes FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+.messagerie-flottante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bouton-whatsapp, .bouton-phone {
+  background-color: #25D366; /* WhatsApp */
+  color: white;
+  font-size: 22px;
+  padding: 15px;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+.bouton-phone {
+  background-color: #4B2BAE; /* Violet pour téléphone */
+}
+
+.bouton-whatsapp:hover, .bouton-phone:hover {
+  transform: scale(1.1);
+}
+</style>
+
+</body>
+</html>

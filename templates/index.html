@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CoffreFort – Splash</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* -------------------------------------------------- Reset */
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html,body{height:100%;width:100%;}
+
+    /* -------------------------------------------------- Variables */
+    :root{
+      /* Bleu identitaire extrait du logo */
+      --cf-blue:#4c2db7;
+    }
+
+    /* -------------------------------------------------- Layout */
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:var(--cf-blue);
+      font-family:'Segoe UI',Arial,sans-serif;
+      color:#fff;
+      overflow:hidden;
+      padding:1rem; /* évite que le contenu colle aux bords sur très petits écrans */
+    }
+
+    .splash{
+      text-align:center;
+      width:100%;
+      max-width:90vw; /* limite la largeur sur desktop ultra‑large */
+      animation:fadeIn 1s ease-out forwards;
+    }
+
+    /* -------------------------------------------------- Logo */
+    .splash__logo{
+      width:clamp(100px,28vw,180px); /* de 100 px à 180 px selon la largeur d'écran */
+      height:auto;
+      animation:pop 0.9s ease-out forwards;
+    }
+
+    /* -------------------------------------------------- Titres */
+    .splash__title{
+      font-size:clamp(1.8rem,5vw,3.2rem);
+      font-weight:700;
+      margin-top:1.1rem;
+      letter-spacing:0.5px;
+    }
+
+    .splash__tagline{
+      font-size:clamp(1rem,3.5vw,1.4rem);
+      margin-top:0.4rem;
+      opacity:0.85;
+    }
+
+    /* -------------------------------------------------- Fade‑out */
+    .fade-out{animation:disappear 0.8s ease-in forwards;}
+
+    /* -------------------------------------------------- Animations */
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+    @keyframes pop{
+      0%{transform:scale(0.4) rotate(-8deg);opacity:0;}
+      70%{transform:scale(1.08) rotate(3deg);opacity:1;}
+      100%{transform:scale(1) rotate(0deg);} }
+
+    @keyframes disappear{to{opacity:0;transform:scale(0.92);} }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash">
+    <!-- Placez logo.png dans le même dossier que ce fichier -->
+    <img src="/static/logo.png" alt="Logo CoffreFort" class="splash__logo" />
+  
+  </div>
+
+  <script>
+    // Après 3 s : fondu puis redirection
+    setTimeout(()=>{
+      const el=document.getElementById('splash');
+      el.classList.add('fade-out');
+      setTimeout(()=>window.location.href='/home',800);
+    },3000);
+  </script>
+</body>
+</html>

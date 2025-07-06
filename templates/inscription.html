@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CoffreFort – Inscription</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet"
+        integrity="sha512-d+4vVKfCG3JGdNmPbDNZP9vNKM5a7Tq7YDsI7qN3CP7O7J7/6bk7+bsIbjESVYpI05Xv1OzUN1qHqdhTc8Kvfg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4B2BAE, #F46A35);
+      color: white;
+      text-align: center;
+      padding: 30px 20px 20px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .container {
+      margin: 30px auto 80px;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4B2BAE;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      background-color: #F46A35;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #d94c1f;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 65px;
+      background-color: #4B2BAE;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .bottom-nav a {
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+    }
+
+    .center-button {
+      background-color: #F46A35;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-top: -40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .center-button a {
+      color: white;
+      font-size: 28px;
+      text-decoration: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .container {
+        margin: 20px 10px 80px;
+        padding: 15px;
+      }
+
+      input, button {
+        font-size: 0.95rem;
+        padding: 10px;
+      }
+
+      .bottom-nav a {
+        font-size: 18px;
+      }
+
+      .center-button {
+        width: 50px;
+        height: 50px;
+      }
+
+      .center-button a {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>CoffreFort</h1>
+  <p>Inscription à la plateforme</p>
+</header>
+
+<div class="container">
+  <h2>Créer un compte</h2>
+  <form method="POST" action="/inscription">
+    <label for="nom">Nom complet</label>
+    <input type="text" id="nom" name="nom" required>
+
+    <label for="prenom">Prenom</label>
+    <input type="text" id="prenom" name="prenom" required>
+
+    <label for="email">Adresse Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="numero">Numéro de téléphone</label>
+    <input type="tel" id="numero" name="numero" required>
+
+    <label for="motdepasse">Mot de passe</label>
+    <input type="password" id="motdepasse" name="motdepasse" required>
+
+    <button type="submit">S'inscrire</button>
+    <br>
+    <i>vous avez deja un compte , <span> <a href="/connexion">Connexion</a></span></i>
+  </form>
+</div>
+
+<div class="bottom-nav">
+  <a href="/home"><i class="fas fa-home"></i></a>
+ 
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+
+<!-- Messagerie flottante -->
+<div class="messagerie-flottante">
+  <a href="https://wa.me/2250707070707" target="_blank" class="bouton-whatsapp" title="Écrivez-nous sur WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="tel:+2252722121212" class="bouton-phone" title="Appelez-nous">
+    <i class="fas fa-phone-alt"></i>
+  </a>
+</div>
+
+<!-- Icônes FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+.messagerie-flottante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bouton-whatsapp, .bouton-phone {
+  background-color: #25D366; /* WhatsApp */
+  color: white;
+  font-size: 22px;
+  padding: 15px;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+.bouton-phone {
+  background-color: #4B2BAE; /* Violet pour téléphone */
+}
+
+.bouton-whatsapp:hover, .bouton-phone:hover {
+  transform: scale(1.1);
+}
+</style>
+
+</body>
+</html>

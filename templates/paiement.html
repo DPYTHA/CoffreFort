@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paiement Premium – CoffreFort</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      text-align: center;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4B2BAE, #F46A35);
+      color: white;
+      padding: 30px 20px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .container {
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    button {
+      background-color: #F46A35;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #d9541f;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Paiement Premium</h1>
+</header>
+
+<div class="container">
+  <h2>Accès Premium – 5 $/mois</h2>
+  <p>Merci de votre confiance. Cliquez sur le bouton ci-dessous pour activer votre compte Premium .</p>
+
+  <!-- 🔁 Simulation fictive -->
+  <form method="POST" action="/paiement">
+    <input type="hidden" name="transaction_id" value="TX123456789">
+    <input type="hidden" name="cpm_result" value="00">
+    <button type="submit">Payer</button>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - CoffreFort</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --violet: #4B2BAE;
+      --orange: #F46A35;
+      --gris: #f4f4f4;
+      --blanc: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: var(--gris);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--violet), var(--orange));
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+
+    .GestionAdmission {
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .GestionAdmission a {
+      background-color: green;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      background: var(--blanc);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--violet);
+      margin-bottom: 20px;
+    }
+
+    .logout {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+
+    .logout a {
+      color: var(--orange);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .logout a i {
+      margin-right: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    thead {
+      background-color: var(--violet);
+      color: white;
+    }
+
+    th, td {
+      padding: 12px 8px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn-activer { background-color: #28a745; color: white; }
+    .btn-desactiver { background-color: #ffc107; color: white; }
+    .btn-supprimer { background-color: #dc3545; color: white; }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+
+      td::before {
+        position: absolute;
+        left: 10px;
+        top: 12px;
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+        text-align: left;
+      }
+
+      .btn {
+        margin: 3px 2px;
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dashboard Administrateur CoffreFort</h1>
+    <div class="GestionAdmission">
+      <a href="/admin/admissions" class="btn btn-primary">🎓 Gérer les Admissions</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="logout">
+      <a href="/deconnexion"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+    </div>
+
+    <h2>Utilisateurs enregistrés</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th>Expiration</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in utilisateurs %}
+        <tr>
+          <td data-label="Nom">{{ u.nom }} {{ u.prenom }}</td>
+          <td data-label="Email">{{ u.email }}</td>
+          <td data-label="Rôle">{{ u.role }}</td>
+          <td data-label="Expiration">{{ u.expiration_date or '—' }}</td>
+          <td data-label="Actions">
+            <form action="/admin/{{ u.id }}/activate" method="post" style="display:inline">
+              <button class="btn btn-activer" title="Activer">✓</button>
+            </form>
+            <form action="/admin/{{ u.id }}/deactivate" method="post" style="display:inline">
+              <button class="btn btn-desactiver" title="Désactiver">✕</button>
+            </form>
+            <form action="/admin/{{ u.id }}/delete" method="post" style="display:inline">
+              <button class="btn btn-supprimer" title="Supprimer">🗑️</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

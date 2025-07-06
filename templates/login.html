@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CoffreFort – Connexion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* même style que inscription */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #4B2BAE, #F46A35);
+      color: white;
+      text-align: center;
+      padding: 30px 20px 20px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+    header h1 { margin: 0; font-size: 2rem; }
+    .container {
+      margin: 30px auto 80px;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      width: 90%;
+      max-width: 500px;
+    }
+    h2 { text-align: center; color: #4B2BAE; }
+    label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      background-color: #F46A35;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover { background-color: #d94c1f; }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 65px;
+      background-color: #4B2BAE;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .bottom-nav a { color: white; font-size: 22px; text-decoration: none; }
+    @media (max-width: 480px) {
+      header h1 { font-size: 1.5rem; }
+      .container { margin: 20px 10px 80px; padding: 15px; }
+      input, button { font-size: 0.95rem; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>CoffreFort</h1>
+  <p>Connexion à la plateforme</p>
+</header>
+
+<div class="container">
+  <h2>Se connecter</h2>
+  <form method="POST" action="/connexion">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="motdepasse">Mot de passe</label>
+    <input type="password" id="motdepasse" name="motdepasse" required>
+
+    <button type="submit">Connexion</button>
+    <br>
+    <i>Pas encore de compte ? <a href="/inscription">S'inscrire</a></i>
+  </form>
+</div>
+
+<div class="bottom-nav">
+  <a href="/home"><i class="fas fa-home"></i></a>
+ 
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</body>
+</html>

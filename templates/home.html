@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>CoffreFort – Accueil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4B2BAE, #F46A35);
+      color: white;
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      position: relative;
+    }
+
+    .logo {
+      height: 60px;
+    }
+
+    .monLogo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .monLogo img {
+      background-color: #F46A35;
+      border-radius: 50%;
+      padding: 5px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 30px 20px 90px;
+    }
+
+    .stat-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .stat-card h2 {
+      color: #4B2BAE;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .stat-card p {
+      color: #777;
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .fichePub {
+      display: block;
+      margin: 30px auto 10px;
+      max-width: 95%;
+      height: auto;
+      border-radius: 5%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 65px;
+      background-color: #4B2BAE;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+
+    .bottom-nav a {
+      color: white;
+      font-size: 22px;
+      text-decoration: none;
+    }
+
+    .center-button {
+      background-color: #F46A35;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-top: -40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .center-button a {
+      color: white;
+      font-size: 28px;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      .nav-links a {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+      }
+
+      .monLogo {
+        position: static;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .monLogo img {
+        height: 50px;
+      }
+
+      .center-button {
+        width: 50px;
+        height: 50px;
+      }
+
+      .center-button a {
+        font-size: 24px;
+      }
+
+      .bottom-nav a {
+        font-size: 20px;
+      }
+
+      .stat-card h2 {
+        font-size: 1.5rem;
+      }
+
+      .stat-card p {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="monLogo">
+    <img src="/static/logo.png" alt="logo" class="logo">
+  </div>
+  <h1>CoffreFort</h1>
+  <div class="nav-links">
+    <a href="/inscription">Inscriptions</a>
+    <a href="/connexion">Connexion</a>
+  </div>
+</header>
+
+<section>
+  <img src="/static/fichePub.png" alt="fiche publicitaire" class="fichePub">
+</section>
+
+<section class="stats">
+  <div class="stat-card">
+    <h2>12k+</h2>
+    <p>Universités dans le monde</p>
+  </div>
+  <div class="stat-card">
+    <h2>870</h2>
+    <p>Admissions ouvertes</p>
+  </div>
+</section>
+
+<div class="bottom-nav">
+  
+  <a href="/parametres"><i class="fas fa-cog"></i></a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+<!-- Messagerie flottante -->
+<div class="messagerie-flottante">
+  <a href="https://wa.me/89879040719" target="_blank" class="bouton-whatsapp" title="Écrivez-nous sur WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="tel:+2250710069791" class="bouton-phone" title="Appelez-nous">
+    <i class="fas fa-phone-alt"></i>
+  </a>
+</div>
+
+<!-- Icônes FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+.messagerie-flottante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bouton-whatsapp, .bouton-phone {
+  background-color: #25D366; /* WhatsApp */
+  color: white;
+  font-size: 22px;
+  padding: 15px;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+.bouton-phone {
+  background-color: #4B2BAE; /* Violet pour téléphone */
+}
+
+.bouton-whatsapp:hover, .bouton-phone:hover {
+  transform: scale(1.1);
+}
+</style>
+
+</body>
+</html>

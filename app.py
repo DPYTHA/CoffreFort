@@ -1,45 +1,73 @@
 from flask import Flask, jsonify, request, redirect, session, url_for, flash, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_mail import Mail, Message
 import psycopg2, uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
-
+from flask import Flask
+from flask_mail import Mail
+from dotenv import load_dotenv
+load_dotenv()  
+import os
 app = Flask(__name__)
 app.secret_key = 'ma_cle_secrete'
 CORS(app)
 
-# Config PostgreSQL
-DB_HOST = "localhost"
-DB_NAME = "CoffreFort"
-DB_USER = "coffreUser"
-DB_PASS = "Pytha1991"
+import os
+from dotenv import load_dotenv
 
-# Connexion à PostgreSQL
+load_dotenv()  # Charge les variables d'environnement depuis .env avant tout
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from flask_mail import Mail
+import psycopg2
+
+app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "une_cle_par_defaut_si_absente")
+
+CORS(app)
+
+# Récupère les variables d'environnement pour la base de données
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
+
+print(f"DB_HOST={DB_HOST}, DB_USER={DB_USER}, DB_PASS={'***' if DB_PASS else None}")
+
+# Connexion PostgreSQL
 conn = psycopg2.connect(
     host=DB_HOST,
-    dbname=DB_NAME,
+    database=DB_NAME,
     user=DB_USER,
-    password=DB_PASS,
-    port="5432"
+    password=DB_PASS
 )
+
 cur = conn.cursor()
 cur.execute("CREATE EXTENSION IF NOT EXISTS unaccent;")
 conn.commit()
 
-
-from flask_mail import Mail, Message
-
-# ─── SMTP de ton choix ───────────────────────────
+# Config Flask-Mail
 app.config.update(
-    MAIL_SERVER   = "smtp.gmail.com",
-    MAIL_PORT     = 465,
-    MAIL_USE_SSL  = True,
-    MAIL_USERNAME = "moua19878@gmail.com",
-    MAIL_PASSWORD = "nygojgrubmqseqkq",   # pas le mdp Gmail normal !
-    MAIL_DEFAULT_SENDER = ("CoffreFort", "moua19878@gmail.com")
+    MAIL_SERVER=os.getenv("MAIL_SERVER"),
+    MAIL_PORT=int(os.getenv("MAIL_PORT")),
+    MAIL_USE_SSL=os.getenv("MAIL_USE_SSL") == "True",
+    MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
+    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
+    MAIL_DEFAULT_SENDER=(
+        os.getenv("MAIL_DEFAULT_SENDER_NAME"),
+        os.getenv("MAIL_DEFAULT_SENDER_EMAIL")
+    )
 )
+
 mail = Mail(app)
+
+# ... Le reste de ton code Flask ...
+
+
 
 
 # Création table

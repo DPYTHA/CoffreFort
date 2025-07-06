@@ -2,55 +2,43 @@ from flask import Flask, jsonify, request, redirect, session, url_for, flash, re
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_mail import Mail, Message
-import psycopg2, uuid
+from urllib.parse import urlparse
+import psycopg2
+import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
-from flask import Flask
-from flask_mail import Mail
 from dotenv import load_dotenv
-load_dotenv()  
 import os
-app = Flask(__name__)
-app.secret_key = 'ma_cle_secrete'
-CORS(app)
 
-import os
-from dotenv import load_dotenv
+# Charger les variables d'environnement depuis .env
+load_dotenv()
 
-load_dotenv()  # Charge les variables d'environnement depuis .env avant tout
-
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from flask_mail import Mail
-import psycopg2
-
+# Initialiser Flask
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "une_cle_par_defaut_si_absente")
-
 CORS(app)
 
-# Récupère les variables d'environnement pour la base de données
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
+# 🔗 Connexion PostgreSQL via DATABASE_URL
+db_url = os.getenv("DATABASE_URL")
+if not db_url:
+    raise RuntimeError("⚠️ DATABASE_URL manquant dans le fichier .env")
 
-print(f"DB_HOST={DB_HOST}, DB_USER={DB_USER}, DB_PASS={'***' if DB_PASS else None}")
+parsed_url = urlparse(db_url)
 
-# Connexion PostgreSQL
 conn = psycopg2.connect(
-    host=DB_HOST,
-    database=DB_NAME,
-    user=DB_USER,
-    password=DB_PASS
+    dbname=parsed_url.path[1:],  # enlever le "/" initial
+    user=parsed_url.username,
+    password=parsed_url.password,
+    host=parsed_url.hostname,
+    port=parsed_url.port
 )
 
+# 📦 Créer l'extension unaccent
 cur = conn.cursor()
 cur.execute("CREATE EXTENSION IF NOT EXISTS unaccent;")
 conn.commit()
 
-# Config Flask-Mail
+# ✉️ Configuration Flask-Mail
 app.config.update(
     MAIL_SERVER=os.getenv("MAIL_SERVER"),
     MAIL_PORT=int(os.getenv("MAIL_PORT")),
@@ -64,6 +52,7 @@ app.config.update(
 )
 
 mail = Mail(app)
+
 
 # ... Le reste de ton code Flask ...
 
@@ -557,5 +546,4 @@ def deconnexion():
     session.clear()
     return redirect("/connexion")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+

@@ -529,5 +529,4 @@ def deconnexion():
     session.clear()
     return redirect("/connexion")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+

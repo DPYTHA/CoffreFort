@@ -59,6 +59,7 @@ mail = Mail(app)
 
 
 
+
 # Création table
 cur.execute("""
 CREATE TABLE IF NOT EXISTS utilisateurs (
@@ -89,6 +90,12 @@ cursor = conn.cursor()
 # ----------------------
 # Inscription
 # ----------------------
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 from werkzeug.security import generate_password_hash
 import threading        # pour ne pas bloquer la requête HTTP
 

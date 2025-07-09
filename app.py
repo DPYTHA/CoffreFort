@@ -156,6 +156,18 @@ Bonnes recherches de bourse !
 
     return render_template("inscription.html")
 
+@app.route("/test-mail")
+def test_mail():
+    try:
+        msg = Message(subject="Test Email CoffreFort",
+                      recipients=["ton.email@gmail.com"],
+                      body="Ceci est un test d'envoi depuis Flask-Mail.")
+        mail.send(msg)
+        return "✅ E-mail envoyé avec succès !"
+    except Exception as e:
+        return f"❌ Erreur d'envoi : {e}"
+
+
 # ----------------------
 # Connexion
 # ----------------------

@@ -197,10 +197,12 @@
 
     <label for="email">Adresse Email</label>
     <input type="email" id="email" name="email" required>
-
-    <label for="numero">Numéro de téléphone</label>
-    <input type="tel" id="numero" name="numero" required>
-
+    <label for="numero">Numéro de téléphone </label>
+<input type="tel" id="numero" name="numero"
+       placeholder="+2250745123456"
+       pattern="^\+[0-9]{6,15}$"
+       required
+     >
     <label for="motdepasse">Mot de passe</label>
     <input type="password" id="motdepasse" name="motdepasse" required>
 

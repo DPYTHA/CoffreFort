@@ -263,6 +263,16 @@
   transform: scale(1.1);
 }
 </style>
+<script>
+  document.querySelector("form").addEventListener("submit", function(e) {
+    const numero = document.getElementById("numero").value;
+    const regex = /^\+[0-9]{6,15}$/;
+    if (!regex.test(numero)) {
+      e.preventDefault();
+      alert("Veuillez entrer un numéro valide commençant par + suivi de 6 à 15 chiffres.");
+    }
+  });
+</script>
 
 </body>
 </html>

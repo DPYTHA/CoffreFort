@@ -380,25 +380,23 @@ def dashboard():
         return redirect("/connexion")
 
     nom, prenom, role, expiration_db = user
-
     now = datetime.now()
 
-    # Cas ADMIN (pas concerné par les restrictions)
+    # ADMIN n'est jamais bloqué
     if role == "admin":
         return render_template("dashboard.html",
                                nom=nom, prenom=prenom,
                                minutes_left=None,
                                show_modal=False)
 
-    # Cas PREMIUM avec date valide
+    # PREMIUM valide
     if role == "premium" and expiration_db and expiration_db > now:
         return render_template("dashboard.html",
                                nom=nom, prenom=prenom,
                                minutes_left=None,
                                show_modal=False)
 
-    # Sinon, gérer les 30 minutes gratuites
-    # Si start_time absent (ex : fermeture navigateur)
+    # SESSION TEMPORAIRE POUR UTILISATEURS GRATUITS
     if "start_time" not in session:
         session["start_time"] = now.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -406,12 +404,22 @@ def dashboard():
     elapsed = now - start_time
     remaining = timedelta(minutes=30) - elapsed
     minutes_left = max(0, int(remaining.total_seconds() // 60))
-    show_modal = elapsed > timedelta(minutes=30)
+
+    # 🚨 Expiration après 10 minutes ➜ mettre à jour dans la base
+    if elapsed > timedelta(minutes=10) and role == "user":
+        cursor.execute("""
+            UPDATE utilisateurs
+            SET role = 'expiré'
+            WHERE email = %s
+        """, (email,))
+        conn.commit()
+        session["role"] = "expiré"
+        return redirect("/premium")
 
     return render_template("dashboard.html",
                            nom=nom, prenom=prenom,
                            minutes_left=minutes_left,
-                           show_modal=show_modal)
+                           show_modal=elapsed > timedelta(minutes=10))
 
 # Dashboard Admin
 # ----------------------

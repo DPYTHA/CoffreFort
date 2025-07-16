@@ -365,6 +365,9 @@ def dashboard():
     if "email" not in session:
         return redirect("/connexion")
 
+    if session.get("role") == "expiré":
+        return redirect("/premium")
+
     email = session["email"]
 
     # Lire les données utilisateur à jour
@@ -380,32 +383,33 @@ def dashboard():
         return redirect("/connexion")
 
     nom, prenom, role, expiration_db = user
+    session["role"] = role  # 🔄 synchroniser la session avec la BDD
+
     now = datetime.now()
 
-    # ADMIN n'est jamais bloqué
+    # ADMIN
     if role == "admin":
         return render_template("dashboard.html",
                                nom=nom, prenom=prenom,
                                minutes_left=None,
                                show_modal=False)
 
-    # PREMIUM valide
+    # PREMIUM
     if role == "premium" and expiration_db and expiration_db > now:
         return render_template("dashboard.html",
                                nom=nom, prenom=prenom,
                                minutes_left=None,
                                show_modal=False)
 
-    # SESSION TEMPORAIRE POUR UTILISATEURS GRATUITS
+    # USER (gratuit)
     if "start_time" not in session:
         session["start_time"] = now.strftime("%Y-%m-%d %H:%M:%S")
 
     start_time = datetime.strptime(session["start_time"], "%Y-%m-%d %H:%M:%S")
     elapsed = now - start_time
-    remaining = timedelta(minutes=30) - elapsed
+    remaining = timedelta(minutes=10) - elapsed
     minutes_left = max(0, int(remaining.total_seconds() // 60))
 
-    # 🚨 Expiration après 10 minutes ➜ mettre à jour dans la base
     if elapsed > timedelta(minutes=10) and role == "user":
         cursor.execute("""
             UPDATE utilisateurs
